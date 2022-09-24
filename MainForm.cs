@@ -44,5 +44,18 @@ namespace RunAsHelper
             // When the form loads - Call the function LoadRunAsOptions
             LoadRunAsOptions();
         }
+
+        private void ButtonExecute_Click(object sender, EventArgs e)
+        {
+            // See if the user has selected an item from the list
+            if (ApplicationListBox.SelectedItem != null)
+            {
+                // Get the selected item
+                RunAs runAs = (RunAs)ApplicationListBox.SelectedItem;
+
+                // Create the Process
+                System.Diagnostics.Process.Start(runAs.Path);
+            }
+        }
     }
 }
