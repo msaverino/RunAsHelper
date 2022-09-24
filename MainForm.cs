@@ -18,23 +18,57 @@ namespace RunAsHelper
             InitializeComponent();
         }
 
+
+        // Make a private variable to store the path to the XML file
+        private string xmlPath = "Options.xml";
+
         // Function to load the RunAsOptions
-        private void LoadRunAsOptions()
+        private void LoadRunAsOptions(string XPath)
         {
             // Create the XML Document Connection
             XmlDocument doc = new XmlDocument();
-            doc.Load("Options.xml");
-
-            foreach (XmlNode node in doc.DocumentElement)
+            
+            try
             {
-                string name = node.Attributes[0].Value;
-                string path = node["path"].InnerText;
-                ApplicationListBox.Items.Add(new RunAs(name, path));
+                // Load the XML file
+                doc.Load(XPath);
+                foreach (XmlNode node in doc.DocumentElement)
+                {
+                    string name = node.Attributes[0].Value;
+                    string path = node["path"].InnerText;
+                    ApplicationListBox.Items.Add(new RunAs(name, path));
+                }
+
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                // Ask the user to locate the file
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "XML File|*.xml";
+                ofd.Title = "Select the Options.xml file";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    // Load the XML file
+                    doc.Load(ofd.FileName);
+                    foreach (XmlNode node in doc.DocumentElement)
+                    {
+                        string name = node.Attributes[0].Value;
+                        string path = node["path"].InnerText;
+                        ApplicationListBox.Items.Add(new RunAs(name, path));
+                    }
+                    // UPdate the path to the XML file
+                    xmlPath = ofd.FileName;
+                }
+            }
+
+
+
         }
 
         private void ModifyXMLDocument()
         {
+            // Opens "Options.xml" in the default application
             System.Diagnostics.Process.Start("Options.xml");
         }
         
@@ -47,7 +81,7 @@ namespace RunAsHelper
         private void MainForm_Load(object sender, EventArgs e)
         {
             // When the form loads - Call the function LoadRunAsOptions
-            LoadRunAsOptions();
+            LoadRunAsOptions(xmlPath);
         }
 
         private void ButtonExecute_Click(object sender, EventArgs e)
@@ -67,7 +101,7 @@ namespace RunAsHelper
         {
             // Reloads the content of the list box.
             ApplicationListBox.Items.Clear();
-            LoadRunAsOptions();
+            LoadRunAsOptions(xmlPath);
         }
 
         private void ExitToolStrip_Click(object sender, EventArgs e)
@@ -131,6 +165,18 @@ namespace RunAsHelper
         {
             // Open Options.Xml with the default application
             ModifyXMLDocument();
+        }
+
+        private void RunAsAdminToolStrip_Click(object sender, EventArgs e)
+        {
+            if (ApplicationListBox.SelectedItem != null)
+            {
+                // Get the selected item
+                RunAs runAs = (RunAs)ApplicationListBox.SelectedItem;
+
+                // Create the process and run it as an administrator
+                
+            }
         }
     }
 }
