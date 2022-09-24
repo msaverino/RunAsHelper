@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<application name="cmd">
+		<path>C:\Windows\system32\cmd.exe</path>
+	</application>
+	<application name="Registry Editor">
+		<path>C:\Windows\regedit.exe</path>
+	</application>
+	<application name="Edge">
+		<path>C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe</path>
+	</application>
+	<application name="PowerShell">
+		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
+	</application>
+</root>

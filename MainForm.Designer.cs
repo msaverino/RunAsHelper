@@ -42,6 +42,7 @@
             this.ApplicationListBox.Name = "ApplicationListBox";
             this.ApplicationListBox.Size = new System.Drawing.Size(205, 134);
             this.ApplicationListBox.TabIndex = 0;
+            this.ApplicationListBox.SelectedIndexChanged += new System.EventHandler(this.ApplicationListBox_SelectedIndexChanged);
             // 
             // ButtonExecute
             // 
@@ -65,6 +66,7 @@
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Run As Helper";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
