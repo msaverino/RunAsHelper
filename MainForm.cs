@@ -57,5 +57,23 @@ namespace RunAsHelper
                 System.Diagnostics.Process.Start(runAs.Path);
             }
         }
+
+        private void ButtonExit_Click(object sender, EventArgs e)
+        {
+            // Confirm with the user wants to exit the application
+            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                // Close the application
+                this.Close();
+            }
+        }
+
+        private void ButtonRefresh_Click(object sender, EventArgs e)
+        {
+            // Reloads the content of the list box.
+            ApplicationListBox.Items.Clear();
+            LoadRunAsOptions();
+        }
     }
 }
