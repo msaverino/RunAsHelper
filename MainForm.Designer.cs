@@ -30,22 +30,30 @@
         {
             this.ApplicationListBox = new System.Windows.Forms.ListBox();
             this.ButtonExecute = new System.Windows.Forms.Button();
-            this.ButtonExit = new System.Windows.Forms.Button();
-            this.ButtonRefresh = new System.Windows.Forms.Button();
+            this.MenuStrip = new System.Windows.Forms.MenuStrip();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RefreshToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExitToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenXMLToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyXMLVSCodeToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyXMLNPPPToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyXMLNPToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ModifyXMLDefaultToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // ApplicationListBox
             // 
             this.ApplicationListBox.FormattingEnabled = true;
-            this.ApplicationListBox.Location = new System.Drawing.Point(12, 12);
+            this.ApplicationListBox.Location = new System.Drawing.Point(9, 27);
             this.ApplicationListBox.Name = "ApplicationListBox";
-            this.ApplicationListBox.Size = new System.Drawing.Size(201, 121);
+            this.ApplicationListBox.Size = new System.Drawing.Size(201, 134);
             this.ApplicationListBox.TabIndex = 0;
             this.ApplicationListBox.SelectedIndexChanged += new System.EventHandler(this.ApplicationListBox_SelectedIndexChanged);
             // 
             // ButtonExecute
             // 
-            this.ButtonExecute.Location = new System.Drawing.Point(12, 139);
+            this.ButtonExecute.Location = new System.Drawing.Point(12, 166);
             this.ButtonExecute.Name = "ButtonExecute";
             this.ButtonExecute.Size = new System.Drawing.Size(198, 37);
             this.ButtonExecute.TabIndex = 2;
@@ -53,42 +61,99 @@
             this.ButtonExecute.UseVisualStyleBackColor = true;
             this.ButtonExecute.Click += new System.EventHandler(this.ButtonExecute_Click);
             // 
-            // ButtonExit
+            // MenuStrip
             // 
-            this.ButtonExit.Location = new System.Drawing.Point(12, 182);
-            this.ButtonExit.Name = "ButtonExit";
-            this.ButtonExit.Size = new System.Drawing.Size(96, 23);
-            this.ButtonExit.TabIndex = 3;
-            this.ButtonExit.Text = "Exit";
-            this.ButtonExit.UseVisualStyleBackColor = true;
-            this.ButtonExit.Click += new System.EventHandler(this.ButtonExit_Click);
+            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.MenuStrip.Name = "MenuStrip";
+            this.MenuStrip.Size = new System.Drawing.Size(225, 24);
+            this.MenuStrip.TabIndex = 5;
+            this.MenuStrip.Text = "menuStrip1";
             // 
-            // ButtonRefresh
+            // optionsToolStripMenuItem
             // 
-            this.ButtonRefresh.Location = new System.Drawing.Point(114, 182);
-            this.ButtonRefresh.Name = "ButtonRefresh";
-            this.ButtonRefresh.Size = new System.Drawing.Size(96, 23);
-            this.ButtonRefresh.TabIndex = 4;
-            this.ButtonRefresh.Text = "Refresh";
-            this.ButtonRefresh.UseVisualStyleBackColor = true;
-            this.ButtonRefresh.Click += new System.EventHandler(this.ButtonRefresh_Click);
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RefreshToolStrip,
+            this.ExitToolStrip,
+            this.OpenXMLToolStrip});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // RefreshToolStrip
+            // 
+            this.RefreshToolStrip.Name = "RefreshToolStrip";
+            this.RefreshToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.RefreshToolStrip.Text = "Refresh Application";
+            this.RefreshToolStrip.Click += new System.EventHandler(this.RefreshToolStrip_Click);
+            // 
+            // ExitToolStrip
+            // 
+            this.ExitToolStrip.Name = "ExitToolStrip";
+            this.ExitToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ExitToolStrip.Text = "Exit";
+            this.ExitToolStrip.Click += new System.EventHandler(this.ExitToolStrip_Click);
+            // 
+            // OpenXMLToolStrip
+            // 
+            this.OpenXMLToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ModifyXMLVSCodeToolStrip,
+            this.ModifyXMLNPPPToolStrip,
+            this.ModifyXMLNPToolStrip,
+            this.ModifyXMLDefaultToolStrip});
+            this.OpenXMLToolStrip.Name = "OpenXMLToolStrip";
+            this.OpenXMLToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.OpenXMLToolStrip.Text = "Modify XML";
+            this.OpenXMLToolStrip.Click += new System.EventHandler(this.OpenXMLToolStrip_Click);
+            // 
+            // ModifyXMLVSCodeToolStrip
+            // 
+            this.ModifyXMLVSCodeToolStrip.Name = "ModifyXMLVSCodeToolStrip";
+            this.ModifyXMLVSCodeToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ModifyXMLVSCodeToolStrip.Text = "Visual Studio Code";
+            this.ModifyXMLVSCodeToolStrip.Click += new System.EventHandler(this.ModifyXMLVSCodeToolStrip_Click);
+            // 
+            // ModifyXMLNPPPToolStrip
+            // 
+            this.ModifyXMLNPPPToolStrip.Name = "ModifyXMLNPPPToolStrip";
+            this.ModifyXMLNPPPToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ModifyXMLNPPPToolStrip.Text = "Notepad ++";
+            this.ModifyXMLNPPPToolStrip.Click += new System.EventHandler(this.ModifyXMLNPPPToolStrip_Click);
+            // 
+            // ModifyXMLNPToolStrip
+            // 
+            this.ModifyXMLNPToolStrip.Name = "ModifyXMLNPToolStrip";
+            this.ModifyXMLNPToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ModifyXMLNPToolStrip.Text = "Notepad";
+            this.ModifyXMLNPToolStrip.Click += new System.EventHandler(this.ModifyXMLNPToolStrip_Click);
+            // 
+            // ModifyXMLDefaultToolStrip
+            // 
+            this.ModifyXMLDefaultToolStrip.Name = "ModifyXMLDefaultToolStrip";
+            this.ModifyXMLDefaultToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ModifyXMLDefaultToolStrip.Text = "Default";
+            this.ModifyXMLDefaultToolStrip.Click += new System.EventHandler(this.ModifyXMLDefaultToolStrip_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(225, 215);
-            this.Controls.Add(this.ButtonRefresh);
-            this.Controls.Add(this.ButtonExit);
             this.Controls.Add(this.ButtonExecute);
             this.Controls.Add(this.ApplicationListBox);
+            this.Controls.Add(this.MenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.MenuStrip;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Run As Helper";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.MenuStrip.ResumeLayout(false);
+            this.MenuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -96,8 +161,15 @@
 
         private System.Windows.Forms.ListBox ApplicationListBox;
         private System.Windows.Forms.Button ButtonExecute;
-        private System.Windows.Forms.Button ButtonExit;
-        private System.Windows.Forms.Button ButtonRefresh;
+        private System.Windows.Forms.MenuStrip MenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RefreshToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem ExitToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem OpenXMLToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem ModifyXMLVSCodeToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem ModifyXMLNPPPToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem ModifyXMLNPToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem ModifyXMLDefaultToolStrip;
     }
 }
 

@@ -32,6 +32,11 @@ namespace RunAsHelper
                 ApplicationListBox.Items.Add(new RunAs(name, path));
             }
         }
+
+        private void ModifyXMLDocument()
+        {
+            System.Diagnostics.Process.Start("Options.xml");
+        }
         
 
         private void ApplicationListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -58,7 +63,14 @@ namespace RunAsHelper
             }
         }
 
-        private void ButtonExit_Click(object sender, EventArgs e)
+        private void RefreshToolStrip_Click(object sender, EventArgs e)
+        {
+            // Reloads the content of the list box.
+            ApplicationListBox.Items.Clear();
+            LoadRunAsOptions();
+        }
+
+        private void ExitToolStrip_Click(object sender, EventArgs e)
         {
             // Confirm with the user wants to exit the application
             DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
@@ -69,11 +81,56 @@ namespace RunAsHelper
             }
         }
 
-        private void ButtonRefresh_Click(object sender, EventArgs e)
+        private void OpenXMLToolStrip_Click(object sender, EventArgs e)
         {
-            // Reloads the content of the list box.
-            ApplicationListBox.Items.Clear();
-            LoadRunAsOptions();
+        }
+
+        private void ModifyXMLVSCodeToolStrip_Click(object sender, EventArgs e)
+        {
+            // Open Options.xml with VSCode
+            // If the requested application is not found, open the XML in the default application.
+            try
+            {
+                System.Diagnostics.Process.Start("code", "Options.xml");
+            } catch
+            {
+                ModifyXMLDocument();
+            }
+        }
+
+        private void ModifyXMLNPPPToolStrip_Click(object sender, EventArgs e)
+        {
+
+            // Open the Options.xml with Notepad ++
+            // If the requested application is not found, open the XML in the default application.
+            try
+            {
+                System.Diagnostics.Process.Start("C:\\Program Files\\Notepad++\\notepad++.exe", "Options.xml");
+            }
+            catch
+            {
+                ModifyXMLDocument();
+            }
+        }
+
+        private void ModifyXMLNPToolStrip_Click(object sender, EventArgs e)
+        {
+            // Open the Options.xml with Notepad ++
+            // If the requested application is not found, open the XML in the default application.
+            try
+            {
+                System.Diagnostics.Process.Start("notepad", "Options.xml");
+            }
+            catch
+            {
+                ModifyXMLDocument();
+            }
+        }
+
+        private void ModifyXMLDefaultToolStrip_Click(object sender, EventArgs e)
+        {
+            // Open Options.Xml with the default application
+            ModifyXMLDocument();
         }
     }
 }
