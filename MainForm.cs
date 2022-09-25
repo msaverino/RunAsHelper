@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,10 +19,81 @@ namespace RunAsHelper
             InitializeComponent();
         }
 
+        private bool ConfirmExit = true;
+        private string PathToConfig = "runas.xml";
+        private readonly string AppDataConfig = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RunAs", "Config.xml");
+        private readonly string AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RunAs");
+        private string PreferedEditor = "notepad.exe";
 
-        // Make a private variable to store the path to the XML file
-        private string xmlPath = "Options.xml";
 
+        private void LoadUserOptions()
+        {
+            // Check if the Config.Xml file exists in %Appdata%\RunAs\Config.xml
+
+
+            if (File.Exists(AppDataConfig))
+            {
+                // Read the XML file
+                var xml = new XmlDocument();
+                xml.Load(AppDataConfig);
+                // Get the ConfirmExit value
+                var confirmExit = xml.SelectSingleNode("RunAs/ConfirmExit").InnerText;
+                // Get the PathToConfig value
+                var pathToConfig = xml.SelectSingleNode("RunAs/PathToConfig").InnerText;
+                var preferedEditor = xml.SelectSingleNode("RunAs/PreferedEditor").InnerText;
+                
+                // Assign the variables to the UserConfig class
+                ConfirmExit = Convert.ToBoolean(confirmExit);
+                PathToConfig = pathToConfig;
+                PreferedEditor = preferedEditor;
+                
+            }
+            else
+            {
+                // Create the %Appdata%\RunAs folder (if it doesn't exist)
+                if (!Directory.Exists(AppDataFolder))
+                {
+                    Directory.CreateDirectory(AppDataFolder);
+                }
+                // Set the default values for the XML file
+                var confirmExit = ConfirmExit;
+                var pathToConfig = PathToConfig;
+                // Create a new file
+                XmlWriter config = new XmlTextWriter(AppDataConfig, null);
+                // Write the XML file
+                config.WriteStartDocument();
+                config.WriteStartElement("RunAs");
+                config.WriteStartElement("ConfirmExit");
+                config.WriteString(ConfirmExit.ToString());
+                config.WriteEndElement();
+                config.WriteStartElement("PathToConfig");
+                config.WriteString(PathToConfig);
+                config.WriteEndElement();
+                config.WriteStartElement("PreferedEditor");
+                config.WriteString(PreferedEditor);
+                config.WriteEndElement();
+                config.WriteEndElement();
+                // Close the XML file
+                config.WriteEndDocument();
+                config.Close();
+
+            }
+
+            
+        }
+
+        // Update the Path to Config XML
+        private void UpdateAppConfig(string path)
+        {
+            // Open the config XML File
+            XmlDocument doc = new XmlDocument();
+            doc.Load(AppDataConfig);
+            doc.SelectSingleNode("RunAs/PathToConfig").InnerText = path;
+            // Save the config
+            doc.Save(AppDataConfig);
+            PathToConfig = path;
+        }
+    
         // Function to load the RunAsOptions
         private void LoadRunAsOptions(string XPath)
         {
@@ -46,7 +118,7 @@ namespace RunAsHelper
                 // Ask the user to locate the file
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Filter = "XML File|*.xml";
-                ofd.Title = "Select the Options.xml file";
+                ofd.Title = "Select the runas.xml file";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     // Load the XML file
@@ -57,19 +129,23 @@ namespace RunAsHelper
                         string path = node["path"].InnerText;
                         ApplicationListBox.Items.Add(new RunAs(name, path));
                     }
-                    // UPdate the path to the XML file
-                    xmlPath = ofd.FileName;
+                    // Update the path to the XML file
+                    UpdateAppConfig(ofd.FileName);
                 }
             }
+        }
+        
+        private void RunWithoutParams(string path)
+        {
 
-
-
+            // Create the Process
+            System.Diagnostics.Process.Start(path);
         }
 
-        private void ModifyXMLDocument()
+        private void ModifyRunAsXMLDocument()
         {
-            // Opens "Options.xml" in the default application
-            System.Diagnostics.Process.Start("Options.xml");
+            // Opens "runas.xml" in the default application
+            System.Diagnostics.Process.Start("runas.xml");
         }
         
 
@@ -81,7 +157,9 @@ namespace RunAsHelper
         private void MainForm_Load(object sender, EventArgs e)
         {
             // When the form loads - Call the function LoadRunAsOptions
-            LoadRunAsOptions(xmlPath);
+            LoadUserOptions();
+            LoadRunAsOptions(PathToConfig);
+            
         }
 
         private void ButtonExecute_Click(object sender, EventArgs e)
@@ -92,91 +170,47 @@ namespace RunAsHelper
                 // Get the selected item
                 RunAs runAs = (RunAs)ApplicationListBox.SelectedItem;
 
-                // Create the Process
-                System.Diagnostics.Process.Start(runAs.Path);
+                RunWithoutParams(runAs.Path);
             }
+
         }
 
         private void RefreshToolStrip_Click(object sender, EventArgs e)
         {
             // Reloads the content of the list box.
             ApplicationListBox.Items.Clear();
-            LoadRunAsOptions(xmlPath);
+            LoadRunAsOptions(PathToConfig);
         }
 
         private void ExitToolStrip_Click(object sender, EventArgs e)
         {
             // Confirm with the user wants to exit the application
-            DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            if(ConfirmExit == true)
             {
-                // Close the application
+                DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    // Close the application
+                    this.Close();
+                }
+            } else
+            {
                 this.Close();
             }
+
         }
 
         private void OpenXMLToolStrip_Click(object sender, EventArgs e)
         {
+            System.Diagnostics.Process.Start(PreferedEditor, PathToConfig);
         }
 
-        private void ModifyXMLVSCodeToolStrip_Click(object sender, EventArgs e)
-        {
-            // Open Options.xml with VSCode
-            // If the requested application is not found, open the XML in the default application.
-            try
-            {
-                System.Diagnostics.Process.Start("code", "Options.xml");
-            } catch
-            {
-                ModifyXMLDocument();
-            }
-        }
-
-        private void ModifyXMLNPPPToolStrip_Click(object sender, EventArgs e)
-        {
-
-            // Open the Options.xml with Notepad ++
-            // If the requested application is not found, open the XML in the default application.
-            try
-            {
-                System.Diagnostics.Process.Start("C:\\Program Files\\Notepad++\\notepad++.exe", "Options.xml");
-            }
-            catch
-            {
-                ModifyXMLDocument();
-            }
-        }
-
-        private void ModifyXMLNPToolStrip_Click(object sender, EventArgs e)
-        {
-            // Open the Options.xml with Notepad ++
-            // If the requested application is not found, open the XML in the default application.
-            try
-            {
-                System.Diagnostics.Process.Start("notepad", "Options.xml");
-            }
-            catch
-            {
-                ModifyXMLDocument();
-            }
-        }
 
         private void ModifyXMLDefaultToolStrip_Click(object sender, EventArgs e)
         {
-            // Open Options.Xml with the default application
-            ModifyXMLDocument();
+            // Open runas.xml with the default application
+            ModifyRunAsXMLDocument();
         }
-
-        private void RunAsAdminToolStrip_Click(object sender, EventArgs e)
-        {
-            if (ApplicationListBox.SelectedItem != null)
-            {
-                // Get the selected item
-                RunAs runAs = (RunAs)ApplicationListBox.SelectedItem;
-
-                // Create the process and run it as an administrator
-                
-            }
-        }
+       
     }
 }

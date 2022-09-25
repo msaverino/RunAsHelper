@@ -34,10 +34,6 @@
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RefreshToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenXMLToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModifyXMLVSCodeToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModifyXMLNPPPToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModifyXMLNPToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.ModifyXMLDefaultToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.RunAsAdminToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
@@ -92,43 +88,10 @@
             // 
             // OpenXMLToolStrip
             // 
-            this.OpenXMLToolStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ModifyXMLVSCodeToolStrip,
-            this.ModifyXMLNPPPToolStrip,
-            this.ModifyXMLNPToolStrip,
-            this.ModifyXMLDefaultToolStrip});
             this.OpenXMLToolStrip.Name = "OpenXMLToolStrip";
             this.OpenXMLToolStrip.Size = new System.Drawing.Size(180, 22);
             this.OpenXMLToolStrip.Text = "Modify XML";
             this.OpenXMLToolStrip.Click += new System.EventHandler(this.OpenXMLToolStrip_Click);
-            // 
-            // ModifyXMLVSCodeToolStrip
-            // 
-            this.ModifyXMLVSCodeToolStrip.Name = "ModifyXMLVSCodeToolStrip";
-            this.ModifyXMLVSCodeToolStrip.Size = new System.Drawing.Size(173, 22);
-            this.ModifyXMLVSCodeToolStrip.Text = "Visual Studio Code";
-            this.ModifyXMLVSCodeToolStrip.Click += new System.EventHandler(this.ModifyXMLVSCodeToolStrip_Click);
-            // 
-            // ModifyXMLNPPPToolStrip
-            // 
-            this.ModifyXMLNPPPToolStrip.Name = "ModifyXMLNPPPToolStrip";
-            this.ModifyXMLNPPPToolStrip.Size = new System.Drawing.Size(173, 22);
-            this.ModifyXMLNPPPToolStrip.Text = "Notepad ++";
-            this.ModifyXMLNPPPToolStrip.Click += new System.EventHandler(this.ModifyXMLNPPPToolStrip_Click);
-            // 
-            // ModifyXMLNPToolStrip
-            // 
-            this.ModifyXMLNPToolStrip.Name = "ModifyXMLNPToolStrip";
-            this.ModifyXMLNPToolStrip.Size = new System.Drawing.Size(173, 22);
-            this.ModifyXMLNPToolStrip.Text = "Notepad";
-            this.ModifyXMLNPToolStrip.Click += new System.EventHandler(this.ModifyXMLNPToolStrip_Click);
-            // 
-            // ModifyXMLDefaultToolStrip
-            // 
-            this.ModifyXMLDefaultToolStrip.Name = "ModifyXMLDefaultToolStrip";
-            this.ModifyXMLDefaultToolStrip.Size = new System.Drawing.Size(173, 22);
-            this.ModifyXMLDefaultToolStrip.Text = "Default";
-            this.ModifyXMLDefaultToolStrip.Click += new System.EventHandler(this.ModifyXMLDefaultToolStrip_Click);
             // 
             // ExitToolStrip
             // 
@@ -140,9 +103,7 @@
             // RunAsAdminToolStrip
             // 
             this.RunAsAdminToolStrip.Name = "RunAsAdminToolStrip";
-            this.RunAsAdminToolStrip.Size = new System.Drawing.Size(95, 20);
-            this.RunAsAdminToolStrip.Text = "Run As Admin";
-            this.RunAsAdminToolStrip.Click += new System.EventHandler(this.RunAsAdminToolStrip_Click);
+            this.RunAsAdminToolStrip.Size = new System.Drawing.Size(12, 20);
             // 
             // MainForm
             // 
@@ -175,10 +136,6 @@
         private System.Windows.Forms.ToolStripMenuItem RefreshToolStrip;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStrip;
         private System.Windows.Forms.ToolStripMenuItem OpenXMLToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem ModifyXMLVSCodeToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem ModifyXMLNPPPToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem ModifyXMLNPToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem ModifyXMLDefaultToolStrip;
         private System.Windows.Forms.ToolStripMenuItem RunAsAdminToolStrip;
     }
 }
