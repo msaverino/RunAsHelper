@@ -19,81 +19,8 @@ namespace RunAsHelper
             InitializeComponent();
         }
 
-        private bool ConfirmExit = true;
-        private string PathToConfig = "runas.xml";
-        private readonly string AppDataConfig = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RunAs", "Config.xml");
-        private readonly string AppDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RunAs");
-        private string PreferedEditor = "notepad.exe";
+        readonly AppConfig appConfig = new AppConfig();
 
-
-        private void LoadUserOptions()
-        {
-            // Check if the Config.Xml file exists in %Appdata%\RunAs\Config.xml
-
-
-            if (File.Exists(AppDataConfig))
-            {
-                // Read the XML file
-                var xml = new XmlDocument();
-                xml.Load(AppDataConfig);
-                // Get the ConfirmExit value
-                var confirmExit = xml.SelectSingleNode("RunAs/ConfirmExit").InnerText;
-                // Get the PathToConfig value
-                var pathToConfig = xml.SelectSingleNode("RunAs/PathToConfig").InnerText;
-                var preferedEditor = xml.SelectSingleNode("RunAs/PreferedEditor").InnerText;
-                
-                // Assign the variables to the UserConfig class
-                ConfirmExit = Convert.ToBoolean(confirmExit);
-                PathToConfig = pathToConfig;
-                PreferedEditor = preferedEditor;
-                
-            }
-            else
-            {
-                // Create the %Appdata%\RunAs folder (if it doesn't exist)
-                if (!Directory.Exists(AppDataFolder))
-                {
-                    Directory.CreateDirectory(AppDataFolder);
-                }
-                // Set the default values for the XML file
-                var confirmExit = ConfirmExit;
-                var pathToConfig = PathToConfig;
-                // Create a new file
-                XmlWriter config = new XmlTextWriter(AppDataConfig, null);
-                // Write the XML file
-                config.WriteStartDocument();
-                config.WriteStartElement("RunAs");
-                config.WriteStartElement("ConfirmExit");
-                config.WriteString(ConfirmExit.ToString());
-                config.WriteEndElement();
-                config.WriteStartElement("PathToConfig");
-                config.WriteString(PathToConfig);
-                config.WriteEndElement();
-                config.WriteStartElement("PreferedEditor");
-                config.WriteString(PreferedEditor);
-                config.WriteEndElement();
-                config.WriteEndElement();
-                // Close the XML file
-                config.WriteEndDocument();
-                config.Close();
-
-            }
-
-            
-        }
-
-        // Update the Path to Config XML
-        private void UpdateAppConfig(string path)
-        {
-            // Open the config XML File
-            XmlDocument doc = new XmlDocument();
-            doc.Load(AppDataConfig);
-            doc.SelectSingleNode("RunAs/PathToConfig").InnerText = path;
-            // Save the config
-            doc.Save(AppDataConfig);
-            PathToConfig = path;
-        }
-    
         // Function to load the RunAsOptions
         private void LoadRunAsOptions(string XPath)
         {
@@ -108,7 +35,18 @@ namespace RunAsHelper
                 {
                     string name = node.Attributes[0].Value;
                     string path = node["path"].InnerText;
-                    ApplicationListBox.Items.Add(new RunAs(name, path));
+                    // Check if the arguments node exists
+                    if (node["arguments"] != null)
+                    {
+                        string arguments = node["arguments"].InnerText;
+                        // Add the RunAs option to the list
+                        ApplicationListBox.Items.Add(new RunAs(name, path, arguments));
+                    }
+                    else
+                    {
+                        // Add the RunAs option to the list
+                        ApplicationListBox.Items.Add(new RunAs(name, path, ""));
+                    }
                 }
 
             }
@@ -127,27 +65,15 @@ namespace RunAsHelper
                     {
                         string name = node.Attributes[0].Value;
                         string path = node["path"].InnerText;
-                        ApplicationListBox.Items.Add(new RunAs(name, path));
+                        string arguments = node["arguments"].InnerText;
+
+                        ApplicationListBox.Items.Add(new RunAs(name, path, arguments));
                     }
                     // Update the path to the XML file
-                    UpdateAppConfig(ofd.FileName);
+                    //UpdateAppConfig(ofd.FileName);
                 }
             }
         }
-        
-        private void RunWithoutParams(string path)
-        {
-
-            // Create the Process
-            System.Diagnostics.Process.Start(path);
-        }
-
-        private void ModifyRunAsXMLDocument()
-        {
-            // Opens "runas.xml" in the default application
-            System.Diagnostics.Process.Start("runas.xml");
-        }
-        
 
         private void ApplicationListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -156,9 +82,11 @@ namespace RunAsHelper
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            // When the form loads - Call the function LoadRunAsOptions
-            LoadUserOptions();
-            LoadRunAsOptions(PathToConfig);
+            // When the form loads, we want to Load the App Config information.
+            appConfig.LoadAppConfig();
+
+
+            LoadRunAsOptions(appConfig.RunAsXML);
             
         }
 
@@ -169,8 +97,17 @@ namespace RunAsHelper
             {
                 // Get the selected item
                 RunAs runAs = (RunAs)ApplicationListBox.SelectedItem;
+                // Check if the arguments are empty
+                if (runAs.Arguments != "")
+                {
+                    // Run the application with the arguments
+                    System.Diagnostics.Process.Start(runAs.Path, runAs.Arguments);
+                }
+                else
+                {
+                    System.Diagnostics.Process.Start(runAs.Path);
 
-                RunWithoutParams(runAs.Path);
+                }
             }
 
         }
@@ -179,13 +116,16 @@ namespace RunAsHelper
         {
             // Reloads the content of the list box.
             ApplicationListBox.Items.Clear();
-            LoadRunAsOptions(PathToConfig);
+            LoadRunAsOptions(appConfig.RunAsXML);
+
+            // Reloads the app config
+            appConfig.LoadAppConfig();
         }
 
         private void ExitToolStrip_Click(object sender, EventArgs e)
         {
             // Confirm with the user wants to exit the application
-            if(ConfirmExit == true)
+            if(appConfig.ConfirmExit == true)
             {
                 DialogResult result = MessageBox.Show("Are you sure you want to exit?", "Exit", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
@@ -200,16 +140,11 @@ namespace RunAsHelper
 
         }
 
+
+        // Functio to update the RunAs XML options.
         private void OpenXMLToolStrip_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(PreferedEditor, PathToConfig);
-        }
-
-
-        private void ModifyXMLDefaultToolStrip_Click(object sender, EventArgs e)
-        {
-            // Open runas.xml with the default application
-            ModifyRunAsXMLDocument();
+            System.Diagnostics.Process.Start(appConfig.PreferredEditor, appConfig.RunAsXML);
         }
        
     }

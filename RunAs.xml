@@ -12,4 +12,8 @@
 	<application name="PowerShell">
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 	</application>
+	<application name="PowerShell - Pass C:\Utils\This.ps1">
+		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
+		<arguments>-file C:\Utils\This.ps1</arguments>
+	</application>
 </root>
