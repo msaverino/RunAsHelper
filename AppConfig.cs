@@ -17,7 +17,8 @@ namespace RunAsHelper
         public string RunAsXML { get; private set; }
         public bool ConfirmExit { get; private set; }
         public string PreferredEditor { get; private set; }
-
+        
+        private XmlDocument xml = new XmlDocument();
 
         public void LoadAppConfig()
         {
@@ -33,7 +34,6 @@ namespace RunAsHelper
 
 
                 // The file exists.
-                var xml = new XmlDocument();
                 xml.Load(AppDataConfig);
                 // Get the ConfirmExit value
                 var confirmExit = xml.SelectSingleNode("RunAs/ConfirmExit").InnerText;
@@ -88,6 +88,19 @@ namespace RunAsHelper
             ConfirmExit = true;
             PreferredEditor = "Notepad.exe";
 
+        }
+
+        public void UpdateAppConfig()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "XML File|*.xml";
+            ofd.Title = "Select the XML File to use";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                RunAsXML = ofd.FileName;
+                xml.SelectSingleNode("RunAs/PathToXML").InnerText = ofd.FileName;
+                xml.Save(AppDataConfig);
+            }
         }
     }
 }

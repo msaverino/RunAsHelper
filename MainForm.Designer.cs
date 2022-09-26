@@ -35,7 +35,6 @@
             this.RefreshToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenXMLToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStrip = new System.Windows.Forms.ToolStripMenuItem();
-            this.RunAsAdminToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,15 +43,15 @@
             this.ApplicationListBox.FormattingEnabled = true;
             this.ApplicationListBox.Location = new System.Drawing.Point(9, 27);
             this.ApplicationListBox.Name = "ApplicationListBox";
-            this.ApplicationListBox.Size = new System.Drawing.Size(201, 134);
+            this.ApplicationListBox.Size = new System.Drawing.Size(215, 134);
             this.ApplicationListBox.TabIndex = 0;
             this.ApplicationListBox.SelectedIndexChanged += new System.EventHandler(this.ApplicationListBox_SelectedIndexChanged);
             // 
             // ButtonExecute
             // 
-            this.ButtonExecute.Location = new System.Drawing.Point(9, 167);
+            this.ButtonExecute.Location = new System.Drawing.Point(9, 172);
             this.ButtonExecute.Name = "ButtonExecute";
-            this.ButtonExecute.Size = new System.Drawing.Size(201, 37);
+            this.ButtonExecute.Size = new System.Drawing.Size(215, 37);
             this.ButtonExecute.TabIndex = 2;
             this.ButtonExecute.Text = "Execute";
             this.ButtonExecute.UseVisualStyleBackColor = true;
@@ -61,11 +60,10 @@
             // MenuStrip
             // 
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem,
-            this.RunAsAdminToolStrip});
+            this.optionsToolStripMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(225, 24);
+            this.MenuStrip.Size = new System.Drawing.Size(236, 24);
             this.MenuStrip.TabIndex = 5;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -82,34 +80,29 @@
             // RefreshToolStrip
             // 
             this.RefreshToolStrip.Name = "RefreshToolStrip";
-            this.RefreshToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.RefreshToolStrip.Size = new System.Drawing.Size(177, 22);
             this.RefreshToolStrip.Text = "Refresh Application";
             this.RefreshToolStrip.Click += new System.EventHandler(this.RefreshToolStrip_Click);
             // 
             // OpenXMLToolStrip
             // 
             this.OpenXMLToolStrip.Name = "OpenXMLToolStrip";
-            this.OpenXMLToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.OpenXMLToolStrip.Size = new System.Drawing.Size(177, 22);
             this.OpenXMLToolStrip.Text = "Modify XML";
             this.OpenXMLToolStrip.Click += new System.EventHandler(this.OpenXMLToolStrip_Click);
             // 
             // ExitToolStrip
             // 
             this.ExitToolStrip.Name = "ExitToolStrip";
-            this.ExitToolStrip.Size = new System.Drawing.Size(180, 22);
+            this.ExitToolStrip.Size = new System.Drawing.Size(177, 22);
             this.ExitToolStrip.Text = "Exit";
             this.ExitToolStrip.Click += new System.EventHandler(this.ExitToolStrip_Click);
-            // 
-            // RunAsAdminToolStrip
-            // 
-            this.RunAsAdminToolStrip.Name = "RunAsAdminToolStrip";
-            this.RunAsAdminToolStrip.Size = new System.Drawing.Size(12, 20);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(225, 213);
+            this.ClientSize = new System.Drawing.Size(236, 221);
             this.Controls.Add(this.ButtonExecute);
             this.Controls.Add(this.ApplicationListBox);
             this.Controls.Add(this.MenuStrip);
@@ -136,7 +129,6 @@
         private System.Windows.Forms.ToolStripMenuItem RefreshToolStrip;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStrip;
         private System.Windows.Forms.ToolStripMenuItem OpenXMLToolStrip;
-        private System.Windows.Forms.ToolStripMenuItem RunAsAdminToolStrip;
     }
 }
 
