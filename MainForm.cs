@@ -6,10 +6,12 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace RunAsHelper
 {
@@ -21,7 +23,9 @@ namespace RunAsHelper
         }
 
         readonly AppConfig appConfig = new AppConfig();
-        
+
+        readonly string CurrentUser = WindowsIdentity.GetCurrent().Name;
+
         // Function to load the RunAsOptions
         public void LoadRunAsOptions(string XPath)
         {
@@ -85,6 +89,10 @@ namespace RunAsHelper
         {
             // When the form loads, we want to Load the App Config information.
             appConfig.LoadAppConfig();
+
+            // update the label "WhoAmILabel" with the current user
+
+            WhoAmILabel.Text = "Current User: " + CurrentUser;
 
 
             LoadRunAsOptions(appConfig.RunAsXML);
@@ -202,6 +210,27 @@ namespace RunAsHelper
         {
             System.Diagnostics.Process.Start(appConfig.PreferredEditor, appConfig.RunAsXML);
         }
-       
+
+        private void ApplicationListBox_DoubleClick(object sender, EventArgs e)
+        {
+            ButtonExecute_Click(sender, e);
+        }
+
+        private void ApplicationListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the user pressed the enter key
+            if (e.KeyCode == Keys.Enter)
+            {
+                ButtonExecute_Click(sender, e);
+            }
+        }
+
+        private void WhoAmILabel_Click(object sender, EventArgs e)
+        {
+            // Show a message box.
+            // Title - Run As Helper
+            // Message: Current User:
+            MessageBox.Show("Current User: " + CurrentUser, "Run As Helper");
+        }
     }
 }

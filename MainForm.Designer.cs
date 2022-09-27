@@ -35,6 +35,7 @@
             this.RefreshToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenXMLToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.WhoAmILabel = new System.Windows.Forms.Label();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +47,8 @@
             this.ApplicationListBox.Size = new System.Drawing.Size(215, 134);
             this.ApplicationListBox.TabIndex = 0;
             this.ApplicationListBox.SelectedIndexChanged += new System.EventHandler(this.ApplicationListBox_SelectedIndexChanged);
+            this.ApplicationListBox.DoubleClick += new System.EventHandler(this.ApplicationListBox_DoubleClick);
+            this.ApplicationListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ApplicationListBox_KeyDown);
             // 
             // ButtonExecute
             // 
@@ -98,11 +101,22 @@
             this.ExitToolStrip.Text = "Exit";
             this.ExitToolStrip.Click += new System.EventHandler(this.ExitToolStrip_Click);
             // 
+            // WhoAmILabel
+            // 
+            this.WhoAmILabel.AutoSize = true;
+            this.WhoAmILabel.Location = new System.Drawing.Point(12, 212);
+            this.WhoAmILabel.Name = "WhoAmILabel";
+            this.WhoAmILabel.Size = new System.Drawing.Size(54, 13);
+            this.WhoAmILabel.TabIndex = 6;
+            this.WhoAmILabel.Text = "WhoAmI?";
+            this.WhoAmILabel.Click += new System.EventHandler(this.WhoAmILabel_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 221);
+            this.ClientSize = new System.Drawing.Size(236, 233);
+            this.Controls.Add(this.WhoAmILabel);
             this.Controls.Add(this.ButtonExecute);
             this.Controls.Add(this.ApplicationListBox);
             this.Controls.Add(this.MenuStrip);
@@ -129,6 +143,7 @@
         private System.Windows.Forms.ToolStripMenuItem RefreshToolStrip;
         private System.Windows.Forms.ToolStripMenuItem ExitToolStrip;
         private System.Windows.Forms.ToolStripMenuItem OpenXMLToolStrip;
+        private System.Windows.Forms.Label WhoAmILabel;
     }
 }
 
