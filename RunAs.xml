@@ -15,29 +15,24 @@
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 		<arguments custom="true"></arguments>
 	</application>
-	<!-- Option 1 -->
 	<application name="cmd">
 		<path>C:\Windows\system32\cmd.exe</path>
 	</application>
-	<!-- Option 2 - Pre-Defined Arguments -->
-	<application name="PowerShell">
+	<application name="PowerShell Pre-Defined Arguments">
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 		<arguments>Write-Host "Hello";Start-Sleep 5</arguments>
 	</application>
-	<!-- Option 3 - Pre-Defined Arguments with the ability to replace string ** Must use {Replace} -->
-	<application name="PowerShell">
+	<application name="PowerShell Pre-Defined Arguments with the ability to replace string ** Must use {Replace}">
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 		<arguments>Write-Host "{Replace}";Start-Sleep 5</arguments>
 		<PromptForArguments>true</PromptForArguments>
 	</application>
-	<!-- Option 4 - Prompt the user to create arguments. -->
-	<application name="PowerShell">
+	<application name="PowerShell Prompt the user to create arguments.">
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 		<arguments></arguments>
 		<PromptForArguments>true</PromptForArguments>
 	</application>
-	<!-- Option 5 - Append the parameteres to the end -->
-	<application name="PowerShell">
+	<application name="PowerShell Append the parameteres to the end">
 		<path>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</path>
 		<arguments>Write-Host "Hello";</arguments>
 		<PromptForArguments>true</PromptForArguments>
